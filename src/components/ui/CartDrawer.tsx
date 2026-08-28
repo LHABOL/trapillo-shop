@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import clsx from "clsx";
@@ -71,12 +72,12 @@ export function CartDrawer() {
             <ul className="flex-1 divide-y divide-ink/10 overflow-y-auto px-6">
               {cart.lines.map((l) => (
                 <li key={`${l.productId}-${l.color}`} className="flex gap-4 py-5">
-                  <div className="h-24 w-20 shrink-0 rounded-sm bg-linen/60">
-                    <BagSilhouette
-                      silhouette={l.silhouette}
-                      colorHex={l.colorHex}
-                      className="h-full w-full"
-                    />
+                  <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-sm bg-linen/60">
+                    {l.image ? (
+                      <Image src={l.image} alt={l.name} fill sizes="80px" className="object-cover" />
+                    ) : (
+                      <BagSilhouette silhouette={l.silhouette} colorHex={l.colorHex} className="h-full w-full" />
+                    )}
                   </div>
                   <div className="flex flex-1 flex-col">
                     <Link

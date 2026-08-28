@@ -1,13 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useRef, useState } from "react";
-import { registerGsap, gsap } from "@/lib/gsap";
-import { useEffect } from "react";
+import { useState } from "react";
 import type { Product } from "@/lib/types";
 import { formatMXN, site } from "@/lib/site";
-import { BagSilhouette } from "@/components/visuals/BagSilhouette";
-import { ProductStage } from "@/components/visuals/ProductStage";
+import { ProductImage } from "@/components/products/ProductImage";
+import { ProductGallery } from "@/components/products/ProductGallery";
 import { AddToCartButton } from "@/components/products/AddToCartButton";
 
 const AVAIL: Record<Product["availability"], string> = {
@@ -17,19 +15,7 @@ const AVAIL: Record<Product["availability"], string> = {
 };
 
 export function ProductDetail({ product, related }: { product: Product; related: Product[] }) {
-  const [color, setColor] = useState(product.colors[Math.min(1, product.colors.length - 1)]);
-  const stage = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    registerGsap();
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced || !stage.current) return;
-    gsap.fromTo(
-      stage.current,
-      { autoAlpha: 0, y: 30, filter: "blur(12px)" },
-      { autoAlpha: 1, y: 0, filter: "blur(0px)", duration: 1.2, ease: "power3.out" },
-    );
-  }, []);
+  const [color, setColor] = useState(product.colors[0]);
 
   return (
     <main className="min-h-screen bg-ivory pb-28 pt-24 md:pt-28">
@@ -42,22 +28,7 @@ export function ProductDetail({ product, related }: { product: Product; related:
         </nav>
 
         <div className="grid gap-14 md:grid-cols-2">
-          <div
-            ref={stage}
-            className="relative aspect-square self-start overflow-hidden rounded-sm bg-linen/50 ring-1 ring-ink/10 md:sticky md:top-28"
-          >
-            <ProductStage
-              silhouette={product.silhouette}
-              weave={product.weave}
-              colorHex={color.hex}
-              shadeHex={color.shade}
-              className="h-full w-full [&_canvas]:!touch-none"
-            />
-            <div className="pointer-events-none absolute inset-0 vignette rounded-sm" />
-            <span className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 text-[0.58rem] uppercase tracking-[0.28em] text-ash">
-              Arrastra para girar
-            </span>
-          </div>
+          <ProductGallery product={product} />
 
           <div>
             <span className="eyebrow">{product.category}</span>
@@ -133,13 +104,11 @@ export function ProductDetail({ product, related }: { product: Product; related:
             <div className="mt-8 grid grid-cols-2 gap-8 lg:grid-cols-3">
               {related.map((r) => (
                 <Link key={r.id} href={`/producto/${r.slug}`} data-cursor="VER" className="group">
-                  <div className="aspect-square rounded-sm bg-linen/50 p-6 ring-1 ring-ink/10">
-                    <BagSilhouette
-                      silhouette={r.silhouette}
-                      weave={r.weave}
-                      colorHex={r.colors[1].hex}
-                      shadeHex={r.colors[1].shade}
-                      className="h-full w-full transition-transform duration-500 group-hover:scale-105"
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-linen/50 ring-1 ring-ink/10">
+                    <ProductImage
+                      product={r}
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 1024px) 50vw, 33vw"
                     />
                   </div>
                   <p className="mt-3 font-serif">{r.name}</p>

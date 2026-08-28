@@ -4,21 +4,20 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { getAllProducts } from "@/lib/products";
 import { formatMXN } from "@/lib/site";
-import { BagSilhouette } from "@/components/visuals/BagSilhouette";
+import { ProductImage } from "@/components/products/ProductImage";
 import { Reveal } from "@/components/ui/Reveal";
 import type { Product } from "@/lib/types";
 
 const SIZES: Product["attributes"]["size"][] = ["mini", "media", "grande"];
 const STYLES: Product["attributes"]["style"][] = ["minimal", "clasica", "statement"];
 const OCCASIONS: Product["attributes"]["occasion"][] = ["diario", "trabajo", "playa", "noche"];
-const COLORS = [
-  { name: "Marfil", hex: "#EDE4D3", shade: "#CDB89A" },
-  { name: "Arena", hex: "#CDB89A", shade: "#A9835B" },
-  { name: "Arcilla", hex: "#A9835B", shade: "#6F4E37" },
-  { name: "Cacao", hex: "#6F4E37", shade: "#3E2C20" },
-];
 
 const all = getAllProducts();
+
+// paleta real, tomada de los colores de los productos
+const COLORS = Array.from(
+  new Map(all.flatMap((p) => p.colors).map((c) => [c.name, c])).values(),
+);
 
 function Chip({
   active,
@@ -35,9 +34,7 @@ function Chip({
       onClick={onClick}
       data-cursor=""
       className={`rounded-full border px-4 py-2 text-[0.72rem] uppercase tracking-[0.16em] transition-colors ${
-        active
-          ? "border-ink bg-ink text-ivory"
-          : "border-ink/25 text-ink/70 hover:border-ink/60"
+        active ? "border-ink bg-ink text-ivory" : "border-ink/25 text-ink/70 hover:border-ink/60"
       }`}
     >
       {children}
@@ -49,7 +46,7 @@ export function Finder() {
   const [size, setSize] = useState<Product["attributes"]["size"]>("media");
   const [style, setStyle] = useState<Product["attributes"]["style"]>("minimal");
   const [occasion, setOccasion] = useState<Product["attributes"]["occasion"]>("diario");
-  const [color, setColor] = useState(COLORS[1]);
+  const [colorName, setColorName] = useState(COLORS[0]?.name ?? "");
 
   const match = useMemo(() => {
     const scored = all
@@ -58,11 +55,12 @@ export function Finder() {
         if (p.attributes.size === size) s += 3;
         if (p.attributes.style === style) s += 2;
         if (p.attributes.occasion === occasion) s += 2;
+        if (p.colors.some((c) => c.name === colorName)) s += 2;
         return { p, s };
       })
       .sort((a, b) => b.s - a.s);
     return scored[0].p;
-  }, [size, style, occasion]);
+  }, [size, style, occasion, colorName]);
 
   return (
     <section className="bg-ivory py-24 md:py-36">
@@ -104,16 +102,16 @@ export function Finder() {
             </div>
             <div>
               <p className="mb-3 text-[0.65rem] uppercase tracking-[0.24em] text-ash">Color</p>
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-3">
                 {COLORS.map((c) => (
                   <button
                     key={c.name}
                     type="button"
-                    onClick={() => setColor(c)}
+                    onClick={() => setColorName(c.name)}
                     aria-label={c.name}
                     data-cursor={c.name}
                     className={`h-8 w-8 rounded-full ring-1 ring-ink/15 transition-transform ${
-                      color.name === c.name ? "scale-110 ring-2 ring-ink" : "hover:scale-105"
+                      colorName === c.name ? "scale-110 ring-2 ring-ink" : "hover:scale-105"
                     }`}
                     style={{ background: c.hex }}
                   />
@@ -124,21 +122,19 @@ export function Finder() {
         </Reveal>
 
         <div className="relative">
-          <div className="mx-auto aspect-square w-[min(80vw,460px)] rounded-sm bg-linen/50 p-8 ring-1 ring-ink/10">
-            <BagSilhouette
-              key={match.id + color.name}
-              silhouette={match.silhouette}
-              weave={match.weave}
-              colorHex={color.hex}
-              shadeHex={color.shade}
-              className="h-full w-full transition-opacity duration-500"
+          <div className="relative mx-auto aspect-[4/5] w-[min(80vw,440px)] overflow-hidden rounded-sm bg-linen/50 ring-1 ring-ink/10">
+            <ProductImage
+              key={match.id}
+              product={match}
+              className="object-cover transition-opacity duration-500"
+              sizes="(max-width: 768px) 80vw, 440px"
             />
           </div>
-          <div className="mx-auto mt-6 w-[min(80vw,460px)] text-center">
+          <div className="mx-auto mt-6 w-[min(80vw,440px)] text-center">
             <p className="text-[0.65rem] uppercase tracking-[0.24em] text-ash">Te proponemos</p>
             <h3 className="mt-1 font-serif text-2xl">{match.name}</h3>
             <p className="mt-1 text-sm tabular-nums text-ash">
-              {formatMXN(match.price)} · {color.name}
+              {formatMXN(match.price)} · {match.colors[0]?.name}
             </p>
             <Link
               href={`/producto/${match.slug}`}

@@ -13,7 +13,7 @@ export default function ColeccionPage() {
     <PageShell
       eyebrow="Tienda"
       title="La colección"
-      intro="Seis modelos. Cada uno nace del mismo hilo y termina en un oficio distinto."
+      intro="Cada pieza nace del mismo hilo y termina en un oficio distinto."
     >
       <Suspense fallback={<div className="mt-12 h-40" />}>
         <CollectionGrid />

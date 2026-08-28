@@ -85,6 +85,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
           colorHex: color.hex,
           quantity,
           silhouette: product.silhouette,
+          image: product.images[0]?.src ?? "",
         },
       ];
     });

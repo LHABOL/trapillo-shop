@@ -3,7 +3,8 @@ import Link from "next/link";
 import { PageShell } from "@/components/ui/PageShell";
 import { Reveal } from "@/components/ui/Reveal";
 import { MacroTexture } from "@/components/visuals/MacroTexture";
-import { BagSilhouette } from "@/components/visuals/BagSilhouette";
+import { ProductImage } from "@/components/products/ProductImage";
+import { getFeaturedProducts } from "@/lib/products";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -59,10 +60,17 @@ export default function HistoriaPage() {
       </div>
 
       <Reveal className="mt-32 border-t border-ink/10 pt-16 text-center">
-        <div className="mx-auto grid max-w-3xl grid-cols-2 gap-6 sm:grid-cols-5">
-          {(["tote", "bucket", "clutch", "backpack", "market"] as const).map((s) => (
-            <BagSilhouette key={s} silhouette={s} colorHex="#CDB89A" shadeHex="#6F4E37" className="h-24 w-full" />
-          ))}
+        <div className="mx-auto grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-5">
+          {getFeaturedProducts()
+            .slice(0, 5)
+            .map((p) => (
+              <div
+                key={p.id}
+                className="relative aspect-[4/5] overflow-hidden rounded-sm bg-linen/40 ring-1 ring-ink/10"
+              >
+                <ProductImage product={p} className="object-cover" sizes="(max-width: 640px) 45vw, 18vw" />
+              </div>
+            ))}
         </div>
         <p className="mx-auto mt-12 max-w-xl font-serif text-2xl italic text-walnut">
           {site.manifesto.finaleA} {site.manifesto.finaleB}

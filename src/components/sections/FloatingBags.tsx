@@ -1,14 +1,16 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { registerGsap, gsap, ScrollTrigger } from "@/lib/gsap";
 import { getFeaturedProducts } from "@/lib/products";
 import { formatMXN } from "@/lib/site";
-import { BagSilhouette } from "@/components/visuals/BagSilhouette";
+import { ProductImage } from "@/components/products/ProductImage";
 import { useIsMobile } from "@/lib/hooks";
 
 const bags = getFeaturedProducts().slice(0, 5);
+const backdrop = getFeaturedProducts().slice(0, 6);
 
 // posición de entrada por índice (§9-§10): izq / der / centro / fondo, alternando
 const ENTRIES = [
@@ -102,25 +104,26 @@ export function FloatingBags() {
 
   return (
     <section ref={section} className="relative min-h-[100svh] overflow-hidden bg-cream">
+      {/* fondo: capa de piezas desenfocadas (§11) */}
       <div
         ref={bg}
-        className="pointer-events-none absolute inset-x-0 -top-[10%] h-[130%] opacity-[0.5]"
-        style={{ filter: "blur(7px)" }}
+        className="pointer-events-none absolute inset-x-0 -top-[12%] h-[135%] opacity-40"
+        style={{ filter: "blur(9px) saturate(0.9)" }}
         aria-hidden
       >
-        <svg viewBox="0 0 600 900" className="h-full w-full" preserveAspectRatio="xMidYMid slice">
-          <defs>
-            <pattern id="fb-weave" width="30" height="30" patternUnits="userSpaceOnUse" patternTransform="rotate(12)">
-              <path d="M0 15 H30 M15 0 V30" stroke="#A9835B" strokeWidth="6" opacity="0.4" />
-            </pattern>
-          </defs>
-          <rect width="600" height="900" fill="url(#fb-weave)" />
-          {bags.map((b, i) => (
-            <g key={b.id} transform={`translate(${60 + i * 110} ${120 + (i % 2) * 320})`} opacity="0.5">
-              <BagSilhouette silhouette={b.silhouette} colorHex="#CDB89A" shadeHex="#8A8072" className="h-40 w-40" />
-            </g>
-          ))}
-        </svg>
+        {backdrop.map((b, i) => (
+          <div
+            key={b.id}
+            className="absolute h-[34vmin] w-[26vmin] overflow-hidden rounded-sm"
+            style={{
+              left: `${8 + (i % 3) * 34}%`,
+              top: `${6 + Math.floor(i / 3) * 46}%`,
+              transform: `rotate(${i % 2 ? 4 : -3}deg)`,
+            }}
+          >
+            <ProductImage product={b} className="object-cover" sizes="30vw" />
+          </div>
+        ))}
       </div>
 
       <div className="container-editorial relative z-10 flex min-h-[100svh] flex-col justify-center">
@@ -145,13 +148,11 @@ export function FloatingBags() {
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <Link href={`/producto/${b.slug}`} className="group block">
-                  <div className="relative aspect-square rounded-sm bg-ivory/70 p-6 shadow-[0_30px_80px_-30px_rgba(28,23,18,0.5)] ring-1 ring-ink/10 transition-transform duration-500 group-hover:-translate-y-1">
-                    <BagSilhouette
-                      silhouette={b.silhouette}
-                      weave={b.weave}
-                      colorHex={b.colors[1].hex}
-                      shadeHex={b.colors[1].shade}
-                      className="h-full w-full"
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-ivory/70 shadow-[0_30px_80px_-30px_rgba(28,23,18,0.5)] ring-1 ring-ink/10 transition-transform duration-500 group-hover:-translate-y-1">
+                    <ProductImage
+                      product={b}
+                      className="object-cover transition-transform duration-700 ease-cinema group-hover:scale-[1.05]"
+                      sizes="(max-width: 768px) 78vw, 340px"
                     />
                   </div>
                   <div className="mt-4 flex items-baseline justify-between font-sans text-sm">

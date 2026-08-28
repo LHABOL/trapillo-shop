@@ -8,6 +8,12 @@ export type ColorOption = {
 
 export type ProductCategory = "tote" | "cesto" | "clutch" | "mochila" | "playa";
 
+export type ProductImage = {
+  /** ruta pública, p. ej. /products/luna-1.jpg */
+  src: string;
+  alt: string;
+};
+
 export interface Product {
   id: string;
   slug: string;
@@ -17,7 +23,9 @@ export interface Product {
   currency: "MXN";
   shortDescription: string;
   description: string;
-  /** claves de silueta procedural — ver BagSilhouette */
+  /** fotografía real del producto; images[0] es la principal */
+  images: ProductImage[];
+  /** claves de silueta procedural — fallback y escenas narrativas (BagSilhouette) */
   silhouette: "tote" | "bucket" | "clutch" | "backpack" | "market";
   weave: "calada" | "cerrada" | "espiga" | "punto-alto";
   colors: ColorOption[];
@@ -43,4 +51,5 @@ export interface CartLine {
   quantity: number;
   silhouette: Product["silhouette"];
   colorHex: string;
+  image: string;
 }

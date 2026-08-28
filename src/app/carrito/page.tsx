@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useCart } from "@/components/providers/CartProvider";
@@ -48,8 +49,12 @@ export default function CarritoPage() {
             <ul className="divide-y divide-ink/10 border-y border-ink/10">
               {cart.lines.map((l) => (
                 <li key={`${l.productId}-${l.color}`} className="flex gap-6 py-6">
-                  <div className="h-32 w-28 shrink-0 rounded-sm bg-linen/50">
-                    <BagSilhouette silhouette={l.silhouette} colorHex={l.colorHex} className="h-full w-full" />
+                  <div className="relative h-32 w-28 shrink-0 overflow-hidden rounded-sm bg-linen/50">
+                    {l.image ? (
+                      <Image src={l.image} alt={l.name} fill sizes="112px" className="object-cover" />
+                    ) : (
+                      <BagSilhouette silhouette={l.silhouette} colorHex={l.colorHex} className="h-full w-full" />
+                    )}
                   </div>
                   <div className="flex flex-1 flex-col">
                     <div className="flex justify-between gap-4">
