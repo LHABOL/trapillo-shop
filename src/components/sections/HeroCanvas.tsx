@@ -54,12 +54,12 @@ export function HeroCanvas({ className }: Props) {
 
     const drawTable = () => {
       const g = ctx.createLinearGradient(0, tableY - 40, 0, H);
-      g.addColorStop(0, "rgba(226,213,191,0)");
-      g.addColorStop(0.25, "rgba(205,184,154,0.35)");
-      g.addColorStop(1, "rgba(111,78,55,0.28)");
+      g.addColorStop(0, "rgba(255,233,214,0)");
+      g.addColorStop(0.25, "rgba(255,196,77,0.30)");
+      g.addColorStop(1, "rgba(139,70,217,0.16)");
       ctx.fillStyle = g;
       ctx.fillRect(0, tableY - 40, W, H - tableY + 40);
-      ctx.strokeStyle = "rgba(62,44,32,0.25)";
+      ctx.strokeStyle = "rgba(36,22,64,0.18)";
       ctx.lineWidth = 1;
       ctx.beginPath();
       ctx.moveTo(0, tableY);
@@ -74,7 +74,7 @@ export function HeroCanvas({ className }: Props) {
       const spread = R * (1.5 - 0.5 * Math.abs(1 - drop));
       ctx.save();
       ctx.filter = "blur(6px)";
-      ctx.fillStyle = `rgba(28,23,18,${0.22 * drop})`;
+      ctx.fillStyle = `rgba(36,22,64,${0.2 * drop})`;
       ctx.beginPath();
       ctx.ellipse(sx, sy, spread, spread * 0.28, 0, 0, Math.PI * 2);
       ctx.fill();
@@ -83,7 +83,7 @@ export function HeroCanvas({ className }: Props) {
 
     const drawTrail = () => {
       if (trail.length < 2) return;
-      ctx.strokeStyle = "rgba(169,131,91,0.9)";
+      ctx.strokeStyle = "rgba(255,107,74,0.92)";
       ctx.lineWidth = 2.2;
       ctx.lineJoin = "round";
       ctx.lineCap = "round";
@@ -105,15 +105,15 @@ export function HeroCanvas({ className }: Props) {
       ctx.rotate(ball.rot);
 
       const grad = ctx.createRadialGradient(-R * 0.35, -R * 0.35, R * 0.2, 0, 0, R);
-      grad.addColorStop(0, "#CDB89A");
-      grad.addColorStop(0.7, "#A9835B");
-      grad.addColorStop(1, "#6F4E37");
+      grad.addColorStop(0, "#FF9E7A");
+      grad.addColorStop(0.7, "#FF6B4A");
+      grad.addColorStop(1, "#E8482C");
       ctx.fillStyle = grad;
       ctx.beginPath();
       ctx.arc(0, 0, R, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.strokeStyle = "rgba(62,44,32,0.55)";
+      ctx.strokeStyle = "rgba(36,22,64,0.45)";
       ctx.lineWidth = 1.4;
       for (let i = 0; i < strands; i++) {
         const a = (i / strands) * Math.PI;
@@ -121,7 +121,7 @@ export function HeroCanvas({ className }: Props) {
         ctx.ellipse(0, 0, R * 0.92, R * 0.32, a, 0, Math.PI * 2);
         ctx.stroke();
       }
-      ctx.strokeStyle = "rgba(244,239,230,0.35)";
+      ctx.strokeStyle = "rgba(255,249,242,0.42)";
       ctx.lineWidth = 1;
       for (let i = 0; i < strands; i++) {
         const a = (i / strands) * Math.PI + 0.4;
@@ -139,11 +139,11 @@ export function HeroCanvas({ className }: Props) {
       }
 
       if (motionBlur) {
-        ctx.fillStyle = "rgba(244,239,230,0.34)";
+        ctx.fillStyle = "rgba(255,249,242,0.34)";
         ctx.fillRect(0, 0, W, H);
       } else {
         ctx.clearRect(0, 0, W, H);
-        ctx.fillStyle = "#F4EFE6";
+        ctx.fillStyle = "#FFF9F2";
         ctx.fillRect(0, 0, W, H);
       }
 

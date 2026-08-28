@@ -32,8 +32,8 @@ const HANDLES: Record<Product["silhouette"], string> = {
 export function BagSilhouette({
   silhouette,
   weave = "cerrada",
-  colorHex = "#CDB89A",
-  shadeHex = "#A9835B",
+  colorHex = "#FF6B4A",
+  shadeHex = "#C4402A",
   className,
   outline = false,
 }: Props) {
@@ -51,7 +51,7 @@ export function BagSilhouette({
           <path d={`M${gap / 2} 0 V${gap}`} stroke={shadeHex} strokeWidth={0.8} opacity={0.28} />
         </pattern>
         <filter id={soft} x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="#1C1712" floodOpacity="0.18" />
+          <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="#241640" floodOpacity="0.18" />
         </filter>
       </defs>
 

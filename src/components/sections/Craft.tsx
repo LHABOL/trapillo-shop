@@ -90,12 +90,14 @@ export function Craft() {
         className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.16]"
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-walnut/70 via-walnut/40 to-walnut/80" />
-      <div className="container-editorial relative grid gap-0 md:grid-cols-2">
-        <div className="relative hidden md:block">
-          <div className="sticky top-0 flex h-[100svh] items-center">
+
+      <div className="container-editorial relative grid md:grid-cols-2">
+        {/* Visual fijo que se funde entre etapas — igual en móvil y escritorio */}
+        <div className="pointer-events-none col-start-1 row-start-1 z-20 md:z-0">
+          <div className="sticky top-14 flex h-[42vh] items-center bg-walnut md:top-0 md:h-[100svh] md:bg-transparent md:py-0">
             <div
               data-craft-stage
-              className="relative aspect-[4/5] w-full overflow-hidden rounded-sm ring-1 ring-ivory/15"
+              className="relative aspect-[16/10] w-full overflow-hidden rounded-sm ring-1 ring-ivory/15 md:aspect-[4/5]"
             >
               {STEPS.map((s, i) => (
                 <div
@@ -113,16 +115,14 @@ export function Craft() {
           </div>
         </div>
 
-        <div>
+        {/* Texto que corre por detrás del visual en móvil */}
+        <div className="relative z-10 col-start-1 row-start-1 pt-[46vh] md:col-start-2 md:row-start-1 md:pt-0 md:pl-14">
           {STEPS.map((s, i) => (
             <div
               key={s.kind}
               data-craft-step
-              className="flex min-h-[80svh] flex-col justify-center py-16 md:min-h-[100svh] md:pl-14"
+              className="flex min-h-[64svh] flex-col justify-center py-14 md:min-h-[100svh] md:py-16"
             >
-              <div className="mb-6 aspect-[3/2] w-full overflow-hidden rounded-sm ring-1 ring-ivory/15 md:hidden">
-                <MacroTexture kind={s.kind} className="h-full w-full" />
-              </div>
               <span className="eyebrow text-ivory/50">0{i + 1} · Artesanía</span>
               <h3 className="mt-3 font-serif text-[clamp(1.9rem,5vw,3.4rem)] text-ivory">{s.title}</h3>
               <p className="mt-5 max-w-md text-ivory/70">{s.body}</p>

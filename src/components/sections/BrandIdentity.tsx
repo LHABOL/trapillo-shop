@@ -28,7 +28,7 @@ export function BrandIdentity() {
           { scale: 1, autoAlpha: 1, y: 0, filter: "blur(0px)", ease: "power2.out", duration: 1 },
           "<0.15",
         )
-        .fromTo(el, { backgroundColor: "#EDE4D3" }, { backgroundColor: "#1C1712", ease: "none", duration: 2 }, 0);
+        .fromTo(el, { backgroundColor: "#FFE9D6" }, { backgroundColor: "#241640", ease: "none", duration: 2 }, 0);
     }, el);
 
     ScrollTrigger.refresh();

@@ -6,7 +6,7 @@ import { gsap } from "@/lib/gsap";
  * "El hilo viaja hacia el carrito" (§18). Clona un punto del producto y lo lleva
  * por una curva bézier hasta el icono del carrito, dejando un rastro de hilo.
  */
-export function flyToCart(origin: HTMLElement | null, colorHex = "#A9835B") {
+export function flyToCart(origin: HTMLElement | null, colorHex = "#FF6B4A") {
   if (typeof window === "undefined") return;
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const target = document.getElementById("cart-icon");

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { registerGsap, gsap, ScrollTrigger } from "@/lib/gsap";
@@ -33,20 +32,18 @@ export function FloatingBags() {
     const el = section.current;
     if (!el) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fine = window.matchMedia("(pointer: fine)").matches;
+    // el desfile corre igual en móvil; solo se ajusta la magnitud del 3D
+    const k = isMobile ? 0.62 : 1;
 
     let idles: ReturnType<typeof gsap.to>[] = [];
     let onMove: ((ev: PointerEvent) => void) | null = null;
 
     const ctx = gsap.context(() => {
-      if (reduced || isMobile) {
+      if (reduced) {
         cards.current.forEach((c) => gsap.set(c, { autoAlpha: 1, xPercent: 0, y: 0, rotateY: 0, scale: 1, z: 0 }));
         return;
       }
-
-      cards.current.forEach((c, i) => {
-        const e = ENTRIES[i];
-        gsap.set(c, { autoAlpha: 0, xPercent: e.x, z: e.z, rotateY: e.ry, scale: 0.7 });
-      });
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -62,12 +59,12 @@ export function FloatingBags() {
         const e = ENTRIES[i];
         tl.fromTo(
           c,
-          { autoAlpha: 0, xPercent: e.x, z: e.z, rotateY: e.ry, scale: 0.7, filter: "blur(8px)" },
-          { autoAlpha: 1, xPercent: 0, z: 40, rotateY: 0, scale: 1, filter: "blur(0px)", ease: "power2.out", duration: 1 },
+          { autoAlpha: 0, xPercent: e.x * k, z: e.z * k, rotateY: e.ry * k, scale: 0.7, filter: "blur(8px)" },
+          { autoAlpha: 1, xPercent: 0, z: 40 * k, rotateY: 0, scale: 1, filter: "blur(0px)", ease: "power2.out", duration: 1 },
           i * 0.9,
         ).to(
           c,
-          { autoAlpha: 0, xPercent: -e.x, z: -420, rotateY: -e.ry, scale: 0.72, filter: "blur(8px)", ease: "power2.in", duration: 1 },
+          { autoAlpha: 0, xPercent: -e.x * k, z: -420 * k, rotateY: -e.ry * k, scale: 0.72, filter: "blur(8px)", ease: "power2.in", duration: 1 },
           i * 0.9 + 1,
         );
       });
@@ -79,19 +76,22 @@ export function FloatingBags() {
         scrollTrigger: { trigger: el, start: "top bottom", end: "bottom top", scrub: true },
       });
 
-      // vaivén contínuo + tilt de puntero
+      // vaivén contínuo
       idles = cards.current
         .filter((c): c is HTMLDivElement => !!c)
         .map((c) =>
-          gsap.to(c, { y: "+=14", rotateZ: 1.2, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1 }),
+          gsap.to(c, { y: "+=12", rotateZ: 1.1, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1 }),
         );
 
-      onMove = (ev: PointerEvent) => {
-        const rx = (ev.clientY / window.innerHeight - 0.5) * -6;
-        const ry = (ev.clientX / window.innerWidth - 0.5) * 10;
-        gsap.to(stage.current, { rotateX: rx, rotateY: ry, duration: 0.8, ease: "power2.out" });
-      };
-      window.addEventListener("pointermove", onMove);
+      // tilt de puntero solo con ratón
+      if (fine) {
+        onMove = (ev: PointerEvent) => {
+          const rx = (ev.clientY / window.innerHeight - 0.5) * -6;
+          const ry = (ev.clientX / window.innerWidth - 0.5) * 10;
+          gsap.to(stage.current, { rotateX: rx, rotateY: ry, duration: 0.8, ease: "power2.out" });
+        };
+        window.addEventListener("pointermove", onMove);
+      }
     }, el);
 
     ScrollTrigger.refresh();
@@ -108,7 +108,7 @@ export function FloatingBags() {
       <div
         ref={bg}
         className="pointer-events-none absolute inset-x-0 -top-[12%] h-[135%] opacity-40"
-        style={{ filter: "blur(9px) saturate(0.9)" }}
+        style={{ filter: "blur(9px) saturate(0.95)" }}
         aria-hidden
       >
         {backdrop.map((b, i) => (
@@ -127,16 +127,16 @@ export function FloatingBags() {
       </div>
 
       <div className="container-editorial relative z-10 flex min-h-[100svh] flex-col justify-center">
-        <div className="mb-4 max-w-md md:mb-0 md:absolute md:left-[max(1.25rem,5vw)] md:top-24">
+        <div className="pointer-events-none absolute left-[max(1.25rem,5vw)] top-20 z-20 max-w-md md:top-24">
           <span className="eyebrow">La colección</span>
           <h2 className="display mt-3 text-walnut">El desfile</h2>
         </div>
 
         <div
-          className="relative mx-auto grid w-full max-w-5xl grid-cols-1 gap-10 md:block md:h-[70vh]"
+          className="relative mx-auto h-[64vh] w-full max-w-5xl md:h-[70vh]"
           style={{ perspective: "1200px" }}
         >
-          <div ref={stage} className="md:absolute md:inset-0" style={{ transformStyle: "preserve-3d" }}>
+          <div ref={stage} className="absolute inset-0" style={{ transformStyle: "preserve-3d" }}>
             {bags.map((b, i) => (
               <div
                 key={b.id}
@@ -144,15 +144,15 @@ export function FloatingBags() {
                   cards.current[i] = n;
                 }}
                 data-cursor="VER PRODUCTO"
-                className="mx-auto w-[min(78vw,340px)] md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2"
+                className="absolute left-1/2 top-1/2 w-[min(72vw,320px)] -translate-x-1/2 -translate-y-1/2"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <Link href={`/producto/${b.slug}`} className="group block">
-                  <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-ivory/70 shadow-[0_30px_80px_-30px_rgba(28,23,18,0.5)] ring-1 ring-ink/10 transition-transform duration-500 group-hover:-translate-y-1">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-ivory/70 shadow-[0_30px_80px_-30px_rgba(36,22,64,0.45)] ring-1 ring-ink/10 transition-transform duration-500 group-hover:-translate-y-1">
                     <ProductImage
                       product={b}
                       className="object-cover transition-transform duration-700 ease-cinema group-hover:scale-[1.05]"
-                      sizes="(max-width: 768px) 78vw, 340px"
+                      sizes="(max-width: 768px) 72vw, 320px"
                     />
                   </div>
                   <div className="mt-4 flex items-baseline justify-between font-sans text-sm">

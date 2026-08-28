@@ -48,9 +48,9 @@ function StageVisual({ stage }: { stage: (typeof STAGES)[number]["key"] }) {
       <svg viewBox="0 0 200 200" className="h-full w-full text-cocoa">
         <defs>
           <pattern id="tb-weave" width="16" height="16" patternUnits="userSpaceOnUse">
-            <rect width="16" height="16" fill="#CDB89A" />
-            <path d="M0 8 H16 M8 0 V16" stroke="#6F4E37" strokeWidth="3" opacity="0.55" />
-            <path d="M0 0 L16 16 M16 0 L0 16" stroke="#A9835B" strokeWidth="1" opacity="0.4" />
+            <rect width="16" height="16" fill="#FFC13B" />
+            <path d="M0 8 H16 M8 0 V16" stroke="#FF6B4A" strokeWidth="3" opacity="0.7" />
+            <path d="M0 0 L16 16 M16 0 L0 16" stroke="#8B46D9" strokeWidth="1" opacity="0.5" />
           </pattern>
         </defs>
         <rect x="16" y="16" width="168" height="168" rx="6" fill="url(#tb-weave)" />
@@ -62,8 +62,8 @@ function StageVisual({ stage }: { stage: (typeof STAGES)[number]["key"] }) {
     <BagSilhouette
       silhouette="tote"
       weave="calada"
-      colorHex="#CDB89A"
-      shadeHex="#6F4E37"
+      colorHex="#FF6B4A"
+      shadeHex="#8B46D9"
       className="h-full w-full"
     />
   );

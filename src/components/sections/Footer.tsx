@@ -39,11 +39,18 @@ export function Footer() {
         preserveAspectRatio="none"
         aria-hidden
       >
+        <defs>
+          <linearGradient id="footer-thread" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#FF6B4A" />
+            <stop offset="0.5" stopColor="#FFC13B" />
+            <stop offset="1" stopColor="#17C4C4" />
+          </linearGradient>
+        </defs>
         <path
           d="M0 20 C 200 80, 400 -20, 600 40 S 1000 90, 1200 30"
           fill="none"
-          stroke="#A9835B"
-          strokeWidth="1.5"
+          stroke="url(#footer-thread)"
+          strokeWidth="2"
         />
       </svg>
 

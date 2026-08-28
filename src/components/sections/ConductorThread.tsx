@@ -38,6 +38,14 @@ export function ConductorThread() {
       preserveAspectRatio="none"
       aria-hidden
     >
+      <defs>
+        <linearGradient id="conductor-thread" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#FF6B4A" />
+          <stop offset="0.35" stopColor="#FFC13B" />
+          <stop offset="0.65" stopColor="#17C4C4" />
+          <stop offset="1" stopColor="#8B46D9" />
+        </linearGradient>
+      </defs>
       <path
         ref={pathRef}
         d="M 8 -2
@@ -46,11 +54,11 @@ export function ConductorThread() {
            S -4 82, 18 96
            S 40 108, 30 120"
         fill="none"
-        stroke="#A9835B"
-        strokeWidth="0.22"
+        stroke="url(#conductor-thread)"
+        strokeWidth="0.28"
         strokeLinecap="round"
         vectorEffect="non-scaling-stroke"
-        opacity="0.6"
+        opacity="0.7"
       />
     </svg>
   );

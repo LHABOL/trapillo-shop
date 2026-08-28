@@ -38,8 +38,8 @@ export function CustomCursor() {
       if (label.current) label.current.textContent = text;
       gsap.to(ring.current, {
         scale: text ? 3.6 : 2.2,
-        borderColor: "rgba(28,23,18,0)",
-        backgroundColor: "rgba(169,131,91,0.94)",
+        borderColor: "rgba(36,22,64,0)",
+        backgroundColor: "rgba(255,107,74,0.95)",
         duration: 0.4,
         ease: "power3.out",
       });
@@ -52,8 +52,8 @@ export function CustomCursor() {
       if (!el) return;
       gsap.to(ring.current, {
         scale: 1,
-        borderColor: "rgba(28,23,18,0.55)",
-        backgroundColor: "rgba(28,23,18,0)",
+        borderColor: "rgba(36,22,64,0.55)",
+        backgroundColor: "rgba(36,22,64,0)",
         duration: 0.4,
         ease: "power3.out",
       });

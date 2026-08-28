@@ -43,24 +43,26 @@ El usuario debe sentir que **sigue físicamente ese hilo**.
 
 ---
 
-## 3. Paleta
+## 3. Paleta — alegre (v2)
+
+Fuente única: `src/app/globals.css :root` + espejo en `tailwind.config.ts`.
 
 | Token   | Hex       | Uso |
 |---------|-----------|-----|
-| `ivory` | `#F4EFE6` | Fondo base, "papel" |
-| `cream` | `#EDE4D3` | Fondo alterno de sección |
-| `linen` | `#E2D5BF` | Superficies, tarjetas |
-| `sand`  | `#CDB89A` | Bordes, detalles, hilo claro |
-| `clay`  | `#A9835B` | Acento cálido, hover, hilo |
-| `cocoa` | `#6F4E37` | Texto secundario, hilo oscuro |
-| `walnut`| `#3E2C20` | Titulares sobre claro |
-| `ink`   | `#1C1712` | Texto principal, escenas oscuras |
-| `ash`   | `#8A8072` | Texto tenue, metadatos |
+| `ivory` | `#FFF9F2` | Fondo base — blanco cálido |
+| `cream` | `#FFE9D6` | Fondo alterno de sección — durazno |
+| `linen` | `#FCE1D0` | Superficies, tarjetas — melocotón pálido |
+| `sand`  | `#FFC44D` | Dorado — acento secundario, hilo claro |
+| `clay`  | `#FF6B4A` | **Coral** — acento principal, hover, hilo, CTA |
+| `cocoa` | `#8B46D9` | **Uva** — acento secundario, texto de apoyo |
+| `walnut`| `#5A2A9E` | Uva profunda — titulares display, fondo Artesanía |
+| `ink`   | `#241640` | Índigo profundo — texto principal, escenas oscuras |
+| `ash`   | `#7E6F9A` | Lila-gris — texto tenue |
+| `sun` `sea` `rose` | `#FFC13B` `#17C4C4` `#FF7FB0` | Acentos rotativos (hilo conductor, mapa, texturas) |
 
-Sin colores saturados. Sin gradientes genéricos: solo transiciones tonales
-tierra→tierra. La luz es **cálida** (temperatura ~3200K), sombras suaves y largas.
-Grain sutil permanente sobre todo el sitio (`.grain` overlay, `mix-blend: multiply`,
-opacidad 4–7%).
+Colores vivos pero en sinergia: coral + uva + sol + durazno, sobre papel cálido.
+El hilo conductor y el del footer son **degradados** coral→sol→turquesa→uva.
+La luz sigue siendo cálida; grain sutil permanente (`mix-blend: multiply`, ~5%).
 
 ---
 
@@ -160,18 +162,22 @@ color, una textura) para encadenar.
 
 ---
 
-## 8. Estrategia mobile (§32) — rediseño, no reducción
+## 8. Estrategia mobile (§32) — v2: mismos scrollytellings que en escritorio
+
+Decisión del cliente: **todas las escenas ancladas y con scrub corren igual en
+móvil**. No se degradan a reveals. Solo se ajustan magnitudes.
 
 | Aspecto | Desktop | Mobile |
 |---------|---------|--------|
-| Smooth scroll | Lenis completo | Lenis con `lerp` mayor, `syncTouch` off |
-| Hero | Canvas físico + DOF | Canvas simplificado, menos sub-steps, sin motion-blur pesado |
-| Pin de escenas | Sí (1,3,5) | Solo escena 3; el resto pasa a reveals verticales |
-| Bolsas flotantes | Órbita 3D con tilt de mouse | Carrusel vertical con parallax + snap, sin tilt |
-| Partículas | ~180 | ~40 |
-| Cursor | Personalizado | Nativo (oculto el custom) |
-| Parallax | 5 capas | 2–3 capas |
-| Tipografía display | hasta 8.5rem | hasta 3rem, más aire |
+| Smooth scroll | Lenis completo | Lenis, `lerp` mayor, `syncTouch` off, `ScrollTrigger.config({ ignoreMobileResize: true })` |
+| Hero | Canvas físico + DOF, pin + scrub | Igual (canvas con menos sub-steps / partículas en low-power) |
+| Escena "hilo→bolsa" | Pin + 5 estados morphing | **Igual** |
+| Artesanía | Visual sticky lateral + crossfade | **Igual** — visual sticky en banda superior, texto corre por detrás |
+| Bolsas flotantes | Órbita 3D pinned + tilt de ratón | **Igual** — parade 3D pinned, magnitudes ×0.62, sin tilt (solo `pointer: fine`) |
+| Identidad | Pin + escala + viraje de fondo | **Igual** |
+| Navegación | Enlaces en la navbar | Menú hamburguesa (`Navbar.tsx`) |
+| Cursor | Personalizado | Nativo (custom oculto en touch / <1024px) |
+| Tipografía display | hasta 9rem | `clamp` desde 2.7rem |
 
 `prefers-reduced-motion`: se desactivan scrubs, pins y canvas; todo se resuelve a
 su estado final con fades cortos. El storytelling permanece: el hilo se dibuja

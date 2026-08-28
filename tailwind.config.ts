@@ -5,16 +5,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Paleta TRAPILLO — hilo, madera, textiles, artesanía
-        ivory: "#F4EFE6",
-        cream: "#EDE4D3",
-        linen: "#E2D5BF",
-        sand: "#CDB89A",
-        clay: "#A9835B",
-        cocoa: "#6F4E37",
-        walnut: "#3E2C20",
-        ink: "#1C1712",
-        ash: "#8A8072",
+        // Paleta TRAPILLO — alegre: coral, uva, sol, durazno. Espejo de globals.css :root.
+        ivory: "#FFF9F2",
+        cream: "#FFE9D6",
+        linen: "#FCE1D0",
+        sand: "#FFC44D",
+        clay: "#FF6B4A",
+        cocoa: "#8B46D9",
+        walnut: "#5A2A9E",
+        ink: "#241640",
+        ash: "#7E6F9A",
+        sun: "#FFC13B",
+        sea: "#17C4C4",
+        rose: "#FF7FB0",
       },
       fontFamily: {
         serif: ["var(--font-fraunces)", "Georgia", "serif"],

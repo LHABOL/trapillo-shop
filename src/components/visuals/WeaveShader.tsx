@@ -20,11 +20,11 @@ uniform float uTime;
 uniform float uProgress;
 uniform vec2 uPointer;
 
-// paleta TRAPILLO
-const vec3 IVORY = vec3(0.957, 0.937, 0.902);
-const vec3 SAND  = vec3(0.804, 0.722, 0.604);
-const vec3 CLAY  = vec3(0.663, 0.514, 0.357);
-const vec3 COCOA = vec3(0.435, 0.306, 0.216);
+// paleta TRAPILLO — alegre
+const vec3 IVORY = vec3(1.000, 0.976, 0.949); // #FFF9F2
+const vec3 SAND  = vec3(1.000, 0.757, 0.231); // sol #FFC13B
+const vec3 CLAY  = vec3(1.000, 0.420, 0.290); // coral #FF6B4A
+const vec3 COCOA = vec3(0.545, 0.275, 0.851); // uva #8B46D9
 
 float thread(float x, float w) {
   float d = abs(fract(x) - 0.5);
@@ -95,7 +95,7 @@ export function WeaveShader({
 
     const fallback = () => {
       canvas.style.background =
-        "linear-gradient(135deg, #EDE4D3, #CDB89A 45%, #6F4E37)";
+        "linear-gradient(135deg, #FFC13B, #FF6B4A 45%, #8B46D9)";
     };
 
     const gl = canvas.getContext("webgl", { antialias: true, alpha: false });
