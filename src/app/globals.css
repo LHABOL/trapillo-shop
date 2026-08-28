@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ivory: #f4efe6;
+  --cream: #ede4d3;
+  --linen: #e2d5bf;
+  --sand: #cdb89a;
+  --clay: #a9835b;
+  --cocoa: #6f4e37;
+  --walnut: #3e2c20;
+  --ink: #1c1712;
+  --ash: #8a8072;
+
+  --step-0: clamp(0.9rem, 0.85rem + 0.2vw, 1rem);
+  --step-1: clamp(1.1rem, 1rem + 0.5vw, 1.35rem);
+  --step-2: clamp(1.4rem, 1.2rem + 1vw, 2rem);
+  --step-3: clamp(1.9rem, 1.5rem + 2vw, 3rem);
+  --step-4: clamp(2.5rem, 1.8rem + 3.5vw, 4.5rem);
+  --step-5: clamp(3rem, 2rem + 6vw, 7rem);
+  --step-6: clamp(3.2rem, 1.6rem + 8vw, 9rem);
+}
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  html {
+    background-color: var(--ivory);
+    color: var(--ink);
+    scroll-behavior: auto; /* Lenis controla el scroll */
+  }
+
+  body {
+    background-color: var(--ivory);
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-size: var(--step-0);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Lenis */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  /* Bloqueo de scroll sin Lenis (reduced-motion). Lenis gestiona el suyo con overflow:clip vía API. */
+  html.scroll-locked,
+  html.scroll-locked body {
+    overflow: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
+
+  ::selection {
+    background: var(--clay);
+    color: var(--ivory);
+  }
+
+  @media (min-width: 1024px) {
+    /* cursor propio: ocultamos el nativo solo con puntero fino */
+    @media (pointer: fine) {
+      * {
+        cursor: none !important;
+      }
+    }
+  }
+}
+
+@layer components {
+  .container-editorial {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 4rem);
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ash);
+  }
+
+  .display {
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-size: var(--step-6);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+  }
+
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -0.15em;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .grain-layer {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .vignette {
+    box-shadow: inset 0 0 18vw 6vw rgba(28, 23, 18, 0.28);
+  }
+}
+
+/* Sin animación → todo a su estado final */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
