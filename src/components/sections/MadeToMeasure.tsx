@@ -28,7 +28,6 @@ export function MadeToMeasure() {
         .to(line.current, { opacity: 0, filter: "blur(10px)", y: -30, ease: "power2.in", duration: 1 });
     }, el);
 
-    ScrollTrigger.refresh();
     return () => ctx.revert();
   }, []);
 

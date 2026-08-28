@@ -18,7 +18,7 @@ export function BrandIdentity() {
 
     const ctx = gsap.context(() => {
       gsap.timeline({
-        scrollTrigger: { trigger: el, start: "top top", end: "+=180%", scrub: 1, pin: true },
+        scrollTrigger: { trigger: el, start: "top top", end: "+=180%", scrub: 0.5, pin: true },
       })
         .fromTo(a.current, { scale: 0.82, autoAlpha: 0.15, y: 40 }, { scale: 1, autoAlpha: 1, y: 0, ease: "power2.out", duration: 1 })
         .to(a.current, { scale: 1.35, autoAlpha: 0, y: -60, filter: "blur(8px)", ease: "power2.in", duration: 1 })
@@ -31,7 +31,6 @@ export function BrandIdentity() {
         .fromTo(el, { backgroundColor: "#FFE9D6" }, { backgroundColor: "#241640", ease: "none", duration: 2 }, 0);
     }, el);
 
-    ScrollTrigger.refresh();
     return () => ctx.revert();
   }, []);
 

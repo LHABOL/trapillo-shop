@@ -15,14 +15,31 @@ import { Finale } from "@/components/sections/Finale";
 import { Contact } from "@/components/sections/Contact";
 import { LocationMap } from "@/components/sections/LocationMap";
 import { Footer } from "@/components/sections/Footer";
-import { ScrollTrigger } from "@/lib/gsap";
+import { registerGsap, ScrollTrigger } from "@/lib/gsap";
 
 export default function HomePage() {
   const [loaded, setLoaded] = useState(false);
   const handleLoaded = useCallback(() => setLoaded(true), []);
 
+  // Un único refresh autoritativo cuando ya montaron todas las secciones y el
+  // loader terminó. Los pines dependen de que TODAS las alturas estén asentadas;
+  // hacer refresh por sección producía posiciones mal calculadas en móvil.
   useEffect(() => {
-    if (loaded) ScrollTrigger.refresh();
+    if (!loaded) return;
+    registerGsap();
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => ScrollTrigger.refresh());
+    });
+    const onLoad = () => ScrollTrigger.refresh();
+    window.addEventListener("load", onLoad);
+    // el swap de fuentes cambia alturas → recalcular cuando estén listas
+    document.fonts?.ready.then(() => ScrollTrigger.refresh()).catch(() => {});
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      window.removeEventListener("load", onLoad);
+    };
   }, [loaded]);
 
   return (

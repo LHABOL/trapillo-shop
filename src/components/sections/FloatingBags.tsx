@@ -49,8 +49,8 @@ export function FloatingBags() {
         scrollTrigger: {
           trigger: el,
           start: "top top",
-          end: `+=${bags.length * 110}%`,
-          scrub: 1,
+          end: `+=${bags.length * 82}%`,
+          scrub: 0.5,
           pin: true,
         },
       });
@@ -94,7 +94,6 @@ export function FloatingBags() {
       }
     }, el);
 
-    ScrollTrigger.refresh();
     return () => {
       idles.forEach((t) => t.kill());
       if (onMove) window.removeEventListener("pointermove", onMove);
@@ -126,14 +125,14 @@ export function FloatingBags() {
         ))}
       </div>
 
-      <div className="container-editorial relative z-10 flex min-h-[100svh] flex-col justify-center">
-        <div className="pointer-events-none absolute left-[max(1.25rem,5vw)] top-20 z-20 max-w-md md:top-24">
+      <div className="container-editorial relative z-10 flex min-h-[100svh] flex-col items-center justify-center gap-4 md:gap-0">
+        <div className="relative z-20 w-full max-w-md text-center md:pointer-events-none md:absolute md:left-[max(1.25rem,5vw)] md:top-24 md:text-left">
           <span className="eyebrow">La colección</span>
-          <h2 className="display mt-3 text-walnut">El desfile</h2>
+          <h2 className="display mt-2 text-walnut md:mt-3">El desfile</h2>
         </div>
 
         <div
-          className="relative mx-auto h-[64vh] w-full max-w-5xl md:h-[70vh]"
+          className="relative mx-auto h-[58vh] w-full max-w-5xl overflow-hidden md:h-[70vh] md:overflow-visible"
           style={{ perspective: "1200px" }}
         >
           <div ref={stage} className="absolute inset-0" style={{ transformStyle: "preserve-3d" }}>
@@ -144,7 +143,7 @@ export function FloatingBags() {
                   cards.current[i] = n;
                 }}
                 data-cursor="VER PRODUCTO"
-                className="absolute left-1/2 top-1/2 w-[min(72vw,320px)] -translate-x-1/2 -translate-y-1/2"
+                className="absolute left-1/2 top-1/2 w-[min(60vw,300px)] -translate-x-1/2 -translate-y-1/2 md:w-[min(72vw,320px)]"
                 style={{ transformStyle: "preserve-3d" }}
               >
                 <Link href={`/producto/${b.slug}`} className="group block">
@@ -152,11 +151,11 @@ export function FloatingBags() {
                     <ProductImage
                       product={b}
                       className="object-cover transition-transform duration-700 ease-cinema group-hover:scale-[1.05]"
-                      sizes="(max-width: 768px) 72vw, 320px"
+                      sizes="(max-width: 768px) 60vw, 320px"
                     />
                   </div>
-                  <div className="mt-4 flex items-baseline justify-between font-sans text-sm">
-                    <span className="font-serif text-base">{b.name}</span>
+                  <div className="mt-3 flex items-baseline justify-between font-sans text-[0.82rem] md:mt-4 md:text-sm">
+                    <span className="font-serif text-[0.95rem] md:text-base">{b.name}</span>
                     <span className="tabular-nums text-ash">{formatMXN(b.price)}</span>
                   </div>
                 </Link>

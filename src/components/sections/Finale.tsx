@@ -41,7 +41,6 @@ export function Finale() {
         .to(copy.current, { autoAlpha: 1, y: 0, duration: 1 }, "-=0.3");
     }, el);
 
-    ScrollTrigger.refresh();
     return () => ctx.revert();
   }, []);
 

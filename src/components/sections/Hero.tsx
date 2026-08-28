@@ -34,7 +34,7 @@ export function Hero() {
           trigger: el,
           start: "top top",
           end: "+=120%",
-          scrub: 1,
+          scrub: 0.5,
           pin: true,
         },
       })
@@ -43,7 +43,6 @@ export function Hero() {
         .to(hint.current, { opacity: 0, ease: "none" }, 0);
     }, el);
 
-    ScrollTrigger.refresh();
     return () => ctx.revert();
   }, []);
 

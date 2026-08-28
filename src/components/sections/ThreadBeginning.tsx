@@ -90,8 +90,8 @@ export function ThreadBeginning() {
         scrollTrigger: {
           trigger: el,
           start: "top top",
-          end: `+=${STAGES.length * 90}%`,
-          scrub: 1,
+          end: `+=${STAGES.length * 62}%`,
+          scrub: 0.5,
           pin: true,
         },
       });
@@ -109,7 +109,6 @@ export function ThreadBeginning() {
       }
     }, el);
 
-    ScrollTrigger.refresh();
     return () => ctx.revert();
   }, []);
 
@@ -118,10 +117,10 @@ export function ThreadBeginning() {
       <div className="container-editorial flex h-full flex-col justify-center">
         <div className="max-w-xl">
           <span className="eyebrow">Cómo nace</span>
-          <h2 className="display mt-4 text-walnut">{site.manifesto.beginning}</h2>
+          <h2 className="display mt-3 text-walnut md:mt-4">{site.manifesto.beginning}</h2>
         </div>
 
-        <div className="relative mx-auto mt-6 aspect-square w-[min(70vw,420px)]">
+        <div className="relative mx-auto mt-5 aspect-square w-[min(58vw,420px)] md:mt-6">
           {STAGES.map((s, i) => (
             <div
               key={s.key}
@@ -135,7 +134,7 @@ export function ThreadBeginning() {
           ))}
         </div>
 
-        <ol className="mx-auto mt-8 flex gap-6 font-sans text-[0.62rem] uppercase tracking-[0.28em]">
+        <ol className="mx-auto mt-6 flex flex-wrap justify-center gap-x-3 gap-y-1.5 font-sans text-[0.56rem] uppercase tracking-[0.24em] md:mt-8 md:gap-6 md:text-[0.62rem] md:tracking-[0.28em]">
           {STAGES.map((s, i) => (
             <li key={s.key}>
               <span

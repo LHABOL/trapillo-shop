@@ -38,7 +38,6 @@ export function LocationMap() {
       });
     }, el);
 
-    ScrollTrigger.refresh();
     return () => ctx.revert();
   }, []);
 

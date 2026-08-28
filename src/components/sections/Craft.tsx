@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { registerGsap, gsap, ScrollTrigger } from "@/lib/gsap";
 import { MacroTexture } from "@/components/visuals/MacroTexture";
 import { WeaveShader } from "@/components/visuals/WeaveShader";
+import { useIsMobile } from "@/lib/hooks";
 
 const STEPS = [
   {
@@ -25,8 +26,11 @@ const STEPS = [
 
 export function Craft() {
   const section = useRef<HTMLElement>(null);
-  const visuals = useRef<(HTMLDivElement | null)[]>([]);
+  const mVisuals = useRef<(HTMLDivElement | null)[]>([]);
+  const mCaptions = useRef<(HTMLDivElement | null)[]>([]);
+  const dVisuals = useRef<(HTMLDivElement | null)[]>([]);
   const progress = useRef(0);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     registerGsap();
@@ -43,10 +47,48 @@ export function Craft() {
       },
     });
 
-    if (reduced) return () => progTrigger.kill();
+    if (reduced) {
+      [...mVisuals.current, ...dVisuals.current].forEach((v, i) => v && gsap.set(v, { autoAlpha: i % STEPS.length === 0 ? 1 : 0 }));
+      mCaptions.current.forEach((c, i) => c && gsap.set(c, { autoAlpha: i === 0 ? 1 : 0 }));
+      return () => progTrigger.kill();
+    }
 
     const ctx = gsap.context(() => {
-      visuals.current.forEach((v, i) => {
+      if (isMobile) {
+        // Móvil: panel anclado, una etapa a la vez, funde con el scrub. Nada encimado.
+        const vis = mVisuals.current;
+        const cap = mCaptions.current;
+        vis.forEach((v, i) => v && gsap.set(v, { autoAlpha: i === 0 ? 1 : 0, scale: i === 0 ? 1 : 1.08 }));
+        cap.forEach((c, i) => c && gsap.set(c, { autoAlpha: i === 0 ? 1 : 0, y: i === 0 ? 0 : 18 }));
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: el,
+            start: "top top",
+            end: `+=${STEPS.length * 78}%`,
+            scrub: 0.5,
+            pin: true,
+          },
+        });
+
+        for (let i = 1; i < STEPS.length; i++) {
+          tl.to(vis[i - 1], { autoAlpha: 0, scale: 1.1, duration: 1, ease: "power1.inOut" }, i)
+            .fromTo(vis[i], { autoAlpha: 0, scale: 0.92 }, { autoAlpha: 1, scale: 1, duration: 1, ease: "power1.inOut" }, i)
+            .to(cap[i - 1], { autoAlpha: 0, y: -18, duration: 0.5, ease: "power1.in" }, i)
+            .fromTo(cap[i], { autoAlpha: 0, y: 18 }, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power1.out" }, i + 0.35);
+        }
+
+        gsap.to(el.querySelector("[data-craft-stage-m]"), {
+          scale: 1.06,
+          ease: "none",
+          scrollTrigger: { trigger: el, start: "top top", end: `+=${STEPS.length * 78}%`, scrub: 0.5 },
+        });
+        return;
+      }
+
+      // Escritorio: visual fijo lateral + texto que corre.
+      const vis = dVisuals.current;
+      vis.forEach((v, i) => {
         if (!v) return;
         gsap.set(v, { autoAlpha: i === 0 ? 1 : 0, scale: i === 0 ? 1 : 1.18 });
         ScrollTrigger.create({
@@ -55,7 +97,7 @@ export function Craft() {
           end: "bottom 60%",
           onToggle: (self) => {
             if (self.isActive) {
-              visuals.current.forEach((o, j) =>
+              vis.forEach((o, j) =>
                 gsap.to(o, {
                   autoAlpha: j === i ? 1 : 0,
                   scale: j === i ? 1 : 1.18,
@@ -68,20 +110,18 @@ export function Craft() {
         });
       });
 
-      // zoom cinematográfico continuo sobre la capa activa
-      gsap.to(el.querySelector("[data-craft-stage]"), {
+      gsap.to(el.querySelector("[data-craft-stage-d]"), {
         scale: 1.12,
         ease: "none",
         scrollTrigger: { trigger: el, start: "top top", end: "bottom bottom", scrub: true },
       });
     }, el);
 
-    ScrollTrigger.refresh();
     return () => {
       progTrigger.kill();
       ctx.revert();
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <section ref={section} className="relative bg-walnut text-ivory">
@@ -91,19 +131,58 @@ export function Craft() {
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-walnut/70 via-walnut/40 to-walnut/80" />
 
-      <div className="container-editorial relative grid md:grid-cols-2">
-        {/* Visual fijo que se funde entre etapas — igual en móvil y escritorio */}
-        <div className="pointer-events-none col-start-1 row-start-1 z-20 md:z-0">
-          <div className="sticky top-14 flex h-[42vh] items-center bg-walnut md:top-0 md:h-[100svh] md:bg-transparent md:py-0">
+      {/* MÓVIL — panel anclado */}
+      <div className="relative flex h-[100svh] flex-col items-center justify-center gap-6 px-6 md:hidden">
+        <span className="eyebrow text-ivory/50">Artesanía</span>
+        <div
+          data-craft-stage-m
+          className="relative aspect-[4/5] w-[min(62vw,280px)] overflow-hidden rounded-sm ring-1 ring-ivory/15"
+        >
+          {STEPS.map((s, i) => (
             <div
-              data-craft-stage
-              className="relative aspect-[16/10] w-full overflow-hidden rounded-sm ring-1 ring-ivory/15 md:aspect-[4/5]"
+              key={s.kind}
+              ref={(n) => {
+                mVisuals.current[i] = n;
+              }}
+              className="absolute inset-0"
+            >
+              <MacroTexture kind={s.kind} className="h-full w-full" />
+            </div>
+          ))}
+          <div className="pointer-events-none absolute inset-0 vignette" />
+        </div>
+        <div className="relative h-48 w-full max-w-sm text-center">
+          {STEPS.map((s, i) => (
+            <div
+              key={s.kind}
+              ref={(n) => {
+                mCaptions.current[i] = n;
+              }}
+              className="absolute inset-x-0 top-0"
+            >
+              <span className="text-[0.6rem] uppercase tracking-[0.28em] text-ivory/40">0{i + 1}</span>
+              <h3 className="mt-1.5 font-serif text-[clamp(1.7rem,6.5vw,2.3rem)] text-ivory">{s.title}</h3>
+              <p className="mx-auto mt-2.5 max-w-[17rem] text-[0.8rem] leading-relaxed text-ivory/70">
+                {s.body}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ESCRITORIO — visual fijo + texto que corre */}
+      <div className="container-editorial relative hidden grid-cols-2 md:grid">
+        <div className="pointer-events-none">
+          <div className="sticky top-0 flex h-[100svh] items-center">
+            <div
+              data-craft-stage-d
+              className="relative aspect-[4/5] w-full overflow-hidden rounded-sm ring-1 ring-ivory/15"
             >
               {STEPS.map((s, i) => (
                 <div
                   key={s.kind}
                   ref={(n) => {
-                    visuals.current[i] = n;
+                    dVisuals.current[i] = n;
                   }}
                   className="absolute inset-0"
                 >
@@ -115,13 +194,12 @@ export function Craft() {
           </div>
         </div>
 
-        {/* Texto que corre por detrás del visual en móvil */}
-        <div className="relative z-10 col-start-1 row-start-1 pt-[46vh] md:col-start-2 md:row-start-1 md:pt-0 md:pl-14">
+        <div className="relative pl-14">
           {STEPS.map((s, i) => (
             <div
               key={s.kind}
               data-craft-step
-              className="flex min-h-[64svh] flex-col justify-center py-14 md:min-h-[100svh] md:py-16"
+              className="flex min-h-[100svh] flex-col justify-center py-16"
             >
               <span className="eyebrow text-ivory/50">0{i + 1} · Artesanía</span>
               <h3 className="mt-3 font-serif text-[clamp(1.9rem,5vw,3.4rem)] text-ivory">{s.title}</h3>
