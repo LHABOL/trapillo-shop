@@ -57,7 +57,7 @@ export function Footer() {
       <div className="container-editorial relative pb-10 pt-24">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <p className="font-serif text-2xl tracking-[0.22em]">{site.name}</p>
+            <p className="font-serif text-2xl italic tracking-[0.06em]">{site.name}</p>
             <p className="mt-3 max-w-xs text-sm text-ivory/60">{site.description}</p>
             <div className="mt-6 flex gap-5 text-[0.7rem] uppercase tracking-[0.2em] text-ivory/70">
               <a href={site.contact.instagram.href} target="_blank" rel="noreferrer" className="link-underline">

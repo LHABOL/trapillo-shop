@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Historia",
-  description: "Del hilo a tu bolsa: cómo nace una pieza TRAPILLO.",
+  description: "Del hilo a tu bolsa: cómo nace una pieza de Gaby Arévalo.",
 };
 
 const CHAPTERS = [

@@ -5,7 +5,7 @@ import { CollectionGrid } from "@/components/products/CollectionGrid";
 
 export const metadata: Metadata = {
   title: "Colección",
-  description: "Todos los modelos de bolsas tejidas TRAPILLO.",
+  description: "Todos los modelos de bolsas tejidas de Gaby Arévalo.",
 };
 
 export default function ColeccionPage() {

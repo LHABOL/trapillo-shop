@@ -11,8 +11,8 @@ type Props = {
 };
 
 /**
- * Wordmark TRAPILLO como SVG. En modo "draw" el hilo (stroke) puede dibujarse
- * con stroke-dasharray (loader §31 y cierre §20).
+ * Wordmark "Gaby Arévalo" como SVG. En modo "draw" el hilo (stroke) puede
+ * dibujarse con stroke-dasharray (loader §31 y cierre §20).
  */
 export const Wordmark = forwardRef<SVGSVGElement, Props>(function Wordmark(
   { className, mode = "fill", title = site.name },
@@ -22,21 +22,23 @@ export const Wordmark = forwardRef<SVGSVGElement, Props>(function Wordmark(
     <svg
       ref={ref}
       className={className}
-      viewBox="0 0 640 96"
+      viewBox="0 0 760 110"
       role="img"
       aria-label={title}
     >
       <text
-        x="50%"
-        y="72"
+        x="380"
+        y="78"
         textAnchor="middle"
+        textLength="700"
+        lengthAdjust="spacingAndGlyphs"
         fontFamily="var(--font-fraunces), Georgia, serif"
-        fontSize="88"
+        fontSize="72"
+        fontStyle="italic"
         fontWeight="400"
-        letterSpacing="10"
         fill={mode === "fill" ? "currentColor" : "none"}
         stroke={mode === "draw" ? "currentColor" : "none"}
-        strokeWidth={mode === "draw" ? 1.1 : 0}
+        strokeWidth={mode === "draw" ? 1 : 0}
         paintOrder="stroke"
       >
         {site.name}

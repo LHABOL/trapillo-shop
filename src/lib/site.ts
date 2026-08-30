@@ -1,12 +1,16 @@
 /**
- * Configuración única de marca. Cambiar TRAPILLO por otra marca = editar aquí.
+ * Configuración única de marca. Cambiar el nombre por otra marca = editar aquí.
  */
 export const site = {
-  name: "TRAPILLO",
+  name: "Gaby Arévalo",
+  /** monograma corto para espacios reducidos */
+  short: "GA",
   tagline: "Del hilo a tu bolsa.",
-  domain: "trapillo.mx",
+  /** placa metálica con el logotipo (esquina superior derecha) */
+  logo: "/brand/logo-plate.jpg",
+  domain: "gabyarevalo.mx",
   description:
-    "Bolsas tejidas a mano en trapillo de algodón. Piezas que permanecen.",
+    "Bolsas tejidas a mano en trapillo de algodón. Hecho a mano con amor.",
   manifesto: {
     measure: "Hecho a tu medida.",
     beginning: "Todo comienza con un hilo.",
@@ -17,12 +21,12 @@ export const site = {
   },
   contact: {
     whatsapp: { label: "+52 55 1234 5678", href: "https://wa.me/525512345678" },
-    instagram: { label: "@trapillo.mx", href: "https://instagram.com/trapillo.mx" },
-    email: { label: "hola@trapillo.mx", href: "mailto:hola@trapillo.mx" },
+    instagram: { label: "@gabyarevalo", href: "https://instagram.com/gabyarevalo" },
+    email: { label: "hola@gabyarevalo.mx", href: "mailto:hola@gabyarevalo.mx" },
     phone: { label: "55 1234 5678", href: "tel:+525512345678" },
     hours: "Lun a Vie · 10:00 – 19:00 · Sáb · 11:00 – 15:00",
     location: {
-      line1: "Taller TRAPILLO",
+      line1: "Taller Gaby Arévalo",
       line2: "Colonia Roma Norte, Ciudad de México",
       // coordenadas aproximadas Roma Norte, solo para el mapa estilizado
       lat: 19.4185,

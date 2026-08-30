@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -47,14 +48,14 @@ export function Navbar() {
           <Link
             href="/"
             data-cursor="INICIO"
-            className="font-serif text-lg tracking-[0.28em] text-ink transition-colors md:text-xl"
+            className="font-serif text-base tracking-[0.12em] text-ink transition-colors md:text-xl md:tracking-[0.14em]"
           >
             {site.name}
           </Link>
         </Magnetic>
 
-        <div className="flex items-center gap-5 md:gap-10">
-          <ul className="hidden items-center gap-8 font-sans text-[0.7rem] uppercase tracking-[0.22em] text-ink/70 md:flex">
+        <div className="flex items-center gap-4 md:gap-8">
+          <ul className="hidden items-center gap-8 font-sans text-[0.7rem] uppercase tracking-[0.22em] text-ink/70 lg:flex">
             {site.nav.map((item) => (
               <li key={item.href}>
                 <Link
@@ -70,6 +71,18 @@ export function Navbar() {
               </li>
             ))}
           </ul>
+
+          {/* Logotipo — placa metálica, esquina superior derecha */}
+          <Link href="/" data-cursor="INICIO" aria-label={site.name} className="shrink-0">
+            <Image
+              src={site.logo}
+              alt={site.name}
+              width={900}
+              height={514}
+              priority
+              className="h-8 w-auto rounded-[3px] ring-1 ring-ink/10 md:h-11"
+            />
+          </Link>
 
           <button
             id="cart-icon"
@@ -90,7 +103,7 @@ export function Navbar() {
             onClick={() => setMenu((m) => !m)}
             aria-label={menu ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={menu}
-            className="flex h-8 w-8 flex-col items-center justify-center gap-[5px] md:hidden"
+            className="flex h-8 w-8 flex-col items-center justify-center gap-[5px] lg:hidden"
           >
             <span
               className={clsx(
@@ -108,10 +121,10 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Menú móvil */}
+      {/* Menú móvil / tablet */}
       <div
         className={clsx(
-          "overflow-hidden border-t border-ink/10 bg-ivory/95 backdrop-blur-md transition-[max-height,opacity] duration-500 ease-cinema md:hidden",
+          "overflow-hidden border-t border-ink/10 bg-ivory/95 backdrop-blur-md transition-[max-height,opacity] duration-500 ease-cinema lg:hidden",
           menu ? "max-h-80 opacity-100" : "max-h-0 opacity-0",
         )}
       >
