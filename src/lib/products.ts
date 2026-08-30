@@ -15,16 +15,15 @@ export const products: Product[] = [
     name: "Modelo 01 · Luna",
     price: 189000,
     currency: "MXN",
-    shortDescription: "Tote de tejido calado en lila, asas largas.",
+    shortDescription: "Tote de tejido calado en tabaco, asas largas.",
     description:
       "Un tote de cuerpo alto y tejido calado que deja pasar la luz. Las asas largas caen al hombro y la trama abierta mantiene la pieza ligera. Cada bolsa toma cerca de catorce horas de trabajo continuo.",
     images: [
-      { src: "/products/luna-1.jpg", alt: "Tote de trapillo calado en lila colgando de la mano" },
-      { src: "/products/luna-2.jpg", alt: "Tote de trapillo lila, vista del cuerpo del tejido" },
+      { src: "/products/luna-worn-1.jpg", alt: "Tote de trapillo calado en tabaco al hombro sobre vestido blanco" },
     ],
     silhouette: "tote",
     weave: "calada",
-    colors: [{ name: "Lila", hex: "#9B6FB0", shade: "#6E4A85" }],
+    colors: [{ name: "Tabaco", hex: "#9A6B3F", shade: "#6E4A28" }],
     materials: ["Trapillo de algodón reciclado", "Asas tejidas a juego"],
     dimensions: { width: 32, height: 34, depth: 12, unit: "cm" },
     availability: "in-stock",
@@ -38,24 +37,21 @@ export const products: Product[] = [
     name: "Modelo 02 · Duna",
     price: 164000,
     currency: "MXN",
-    shortDescription: "Cesto en bloque de color con cordón.",
+    shortDescription: "Mini bolsa gris de punto grueso, asa cuadrada.",
     description:
-      "Un cesto de cuerpo redondo tejido en bloque de color rosa y salvia, con cierre de cordón y asa larga para cruzar. Nace de una espiral que crece desde el centro de la base y se sostiene de pie sola.",
+      "Cuerpo redondo y compacto de punto muy grueso en gris, rematado con un asa cuadrada tejida que mantiene su forma sola. Pequeña, firme, para llevar lo justo.",
     images: [
-      { src: "/products/duna-1.jpg", alt: "Cesto de trapillo rosa y verde salvia con asa cruzada" },
+      { src: "/products/duna-worn-1.jpg", alt: "Mini bolsa de trapillo gris con asa cuadrada, sostenida a la cadera" },
     ],
     silhouette: "bucket",
     weave: "cerrada",
-    colors: [
-      { name: "Rosa", hex: "#E3AEB4", shade: "#B98088" },
-      { name: "Salvia", hex: "#7C8A6E", shade: "#586347" },
-    ],
-    materials: ["Trapillo de algodón reciclado", "Cordón de cierre a juego", "Alma de cuerda de yute"],
-    dimensions: { width: 24, height: 22, depth: 24, unit: "cm" },
+    colors: [{ name: "Gris", hex: "#B7B9B3", shade: "#8C8E88" }],
+    materials: ["Trapillo grueso de algodón", "Asa cuadrada tejida"],
+    dimensions: { width: 20, height: 18, depth: 12, unit: "cm" },
     availability: "in-stock",
     category: "cesto",
     featured: true,
-    attributes: { size: "media", style: "clasica", occasion: "diario" },
+    attributes: { size: "mini", style: "clasica", occasion: "diario" },
   },
   {
     id: "p03",
@@ -90,6 +86,8 @@ export const products: Product[] = [
     description:
       "Punto grueso y lleno en amarillo, con asa superior tejida y una cadena dorada que se quita cuando la llevas en mano. Un color que se lleva todo el verano.",
     images: [
+      { src: "/products/marea-worn-1.jpg", alt: "Bolsa de trapillo amarilla con cadena dorada, colgada del brazo" },
+      { src: "/products/marea-worn-2.jpg", alt: "Bolsa de trapillo amarilla, look completo" },
       { src: "/products/marea-1.jpg", alt: "Bolsa de trapillo amarilla con cadena dorada, vista frontal" },
       { src: "/products/marea-2.jpg", alt: "Bolsa de trapillo amarilla vista de lado" },
     ],
@@ -113,6 +111,7 @@ export const products: Product[] = [
     description:
       "Cuerpo de trapillo rosa con solapa de piel, cierre giratorio dorado y tirantes ajustables. Estructura firme que aguanta el día completo.",
     images: [
+      { src: "/products/nido-worn-1.jpg", alt: "Mochila de trapillo rosa con solapa de piel, puesta en la espalda" },
       { src: "/products/nido-1.jpg", alt: "Mochila de trapillo rosa con solapa de piel y cierre dorado" },
     ],
     silhouette: "backpack",
@@ -135,6 +134,9 @@ export const products: Product[] = [
     description:
       "El gesto más pequeño de la colección. Tejido apretado sobre una estructura interna, en azul petróleo, con cierre metálico dorado. Entra lo esencial y nada más.",
     images: [
+      { src: "/products/aire-worn-1.jpg", alt: "Clutch de trapillo azul petróleo bajo el brazo" },
+      { src: "/products/aire-worn-2.jpg", alt: "Clutch de trapillo azul petróleo abierto con el interior a la vista" },
+      { src: "/products/aire-worn-3.jpg", alt: "Clutch de trapillo azul petróleo, look completo" },
       { src: "/products/aire-1.jpg", alt: "Clutch de trapillo azul petróleo cerrado" },
       { src: "/products/aire-2.jpg", alt: "Clutch de trapillo azul petróleo abierto, cierre dorado" },
     ],
@@ -158,6 +160,7 @@ export const products: Product[] = [
     description:
       "Tote en verde olivo de punto denso, con asa trenzada a tres cabos y una borla de piel en el cierre. Lleva la etiqueta metálica cosida a mano. El final es donde se nota el oficio.",
     images: [
+      { src: "/products/tierra-worn-1.jpg", alt: "Tote de trapillo verde olivo con borla de piel, colgado de la mano" },
       { src: "/products/tierra-1.jpg", alt: "Tote de trapillo verde olivo con borla de piel, vista frontal" },
       { src: "/products/tierra-2.jpg", alt: "Tote de trapillo verde olivo, vista en ángulo" },
     ],
@@ -181,6 +184,7 @@ export const products: Product[] = [
     description:
       "Hobo negro de punto muy grueso, con forma envolvente que cae al hombro y una cadena corta rematada con un eslabón de media luna. Volumen sin peso.",
     images: [
+      { src: "/products/onix-worn-1.jpg", alt: "Bolsa hobo de trapillo negro con cadena de media luna, en la mano" },
       { src: "/products/onix-1.jpg", alt: "Bolsa hobo de trapillo negro de punto grueso, vista frontal" },
       { src: "/products/onix-2.jpg", alt: "Bolsa hobo de trapillo negro, vista de lado" },
     ],
@@ -204,6 +208,7 @@ export const products: Product[] = [
     description:
       "Bolsa de solapa en cognac, con trenzado a mano en la tapa, borla de ante y una cadena dorada para llevar cruzada. La pieza más vestida de la colección.",
     images: [
+      { src: "/products/copa-worn-1.jpg", alt: "Bolsa de solapa de trapillo cognac con borla y cadena, cruzada al cuerpo" },
       { src: "/products/copa-1.jpg", alt: "Bolsa de solapa de trapillo cognac con borla, vista frontal" },
       { src: "/products/copa-2.jpg", alt: "Bolsa de solapa de trapillo cognac, vista de lado con cadena" },
     ],
