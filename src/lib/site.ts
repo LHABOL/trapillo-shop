@@ -21,7 +21,10 @@ export const site = {
   },
   contact: {
     whatsapp: { label: "+52 55 1234 5678", href: "https://wa.me/525512345678" },
-    instagram: { label: "@gabyarevalo", href: "https://instagram.com/gabyarevalo" },
+    instagram: {
+      label: "@hechoamanoconamor_ga",
+      href: "https://www.instagram.com/hechoamanoconamor_ga/",
+    },
     email: { label: "hola@gabyarevalo.mx", href: "mailto:hola@gabyarevalo.mx" },
     phone: { label: "55 1234 5678", href: "tel:+525512345678" },
     hours: "Lun a Vie · 10:00 – 19:00 · Sáb · 11:00 – 15:00",
