@@ -14,6 +14,7 @@ import { FeaturedCollection } from "@/components/sections/FeaturedCollection";
 import { Finale } from "@/components/sections/Finale";
 import { Contact } from "@/components/sections/Contact";
 import { LocationMap } from "@/components/sections/LocationMap";
+import { CustomizeInvite } from "@/components/sections/CustomizeInvite";
 import { Footer } from "@/components/sections/Footer";
 import { registerGsap, ScrollTrigger } from "@/lib/gsap";
 
@@ -58,6 +59,7 @@ export default function HomePage() {
         <Finale />
         <Contact />
         <LocationMap />
+        <CustomizeInvite />
       </main>
       <Footer />
     </>

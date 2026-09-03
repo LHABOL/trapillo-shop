@@ -55,7 +55,7 @@ export function Navbar() {
         </Magnetic>
 
         <div className="flex items-center gap-4 md:gap-8">
-          <ul className="hidden items-center gap-8 font-sans text-[0.7rem] uppercase tracking-[0.22em] text-ink/70 lg:flex">
+          <ul className="hidden items-center gap-5 font-sans text-[0.7rem] uppercase tracking-[0.16em] text-ink/70 lg:flex xl:gap-8 xl:tracking-[0.22em]">
             {site.nav.map((item) => (
               <li key={item.href}>
                 <Link

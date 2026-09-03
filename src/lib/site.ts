@@ -45,6 +45,7 @@ export const site = {
   },
   nav: [
     { label: "Colección", href: "/coleccion" },
+    { label: "Personalización", href: "/personalizacion" },
     { label: "Historia", href: "/historia" },
     { label: "Contacto", href: "/contacto" },
   ],

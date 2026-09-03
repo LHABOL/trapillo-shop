@@ -14,6 +14,7 @@ const cols = [
   {
     title: "Casa",
     links: [
+      { label: "Personalización", href: "/personalizacion" },
       { label: "Historia", href: "/historia" },
       { label: "Contacto", href: "/contacto" },
       { label: "Carrito", href: "/carrito" },
